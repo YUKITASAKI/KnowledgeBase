@@ -1,2 +1,2 @@
-# KnowledgeBase
-A public knowledge base of my technical research, daily learnings, and practical notes. AWS / Infrastructure / DevOps / Networking / Security / Git / Linux を中心に整理しています。
+「AWS、インフラ、DevOps、ネットワーク、セキュリティ、Git、Linux」を中心に、日々の学習や技術検証の内容を整理した個人の公開ナレッジベースです。
+実務で得た知見やメモ、トラブルシューティングなどを体系的にまとめています。
