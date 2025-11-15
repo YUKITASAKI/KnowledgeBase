@@ -1,7 +1,3 @@
-# Httpd
-
----
-
 ## 1. 構築環境
 
 ```bash
@@ -222,5 +218,3 @@ KeepAliveTimeout 5
 ```bash
 Timeout 60
 ```
-
-
