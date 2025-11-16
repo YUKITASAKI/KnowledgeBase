@@ -357,11 +357,12 @@ $ git branch -D dev
 
 ### mainからfeatureブランチ作成
 
-mainブランチからfeatureブランチを作成して、featureブランチでコードの修正を実施します。
+mainブランチからfeatureブランチを作成します。
 
 ```bash
-$ git branch
+$ git switch main
 * main
+$ git pull
 $ git checkout -b feature
 $ git branch
 * feature
@@ -381,7 +382,7 @@ branch 'feature' set up to track 'origin/feature'.
 
 ```bash
 $ git add xxx
-$ git commit -m ""
+$ git commit -m "docs: update knowledge files Git.md"
 ```
 
 ### リモート(origin/main)の変更を取り込む
@@ -420,10 +421,11 @@ $ git rebase --continue
 $ git push origin feature
 ```
 
-### Pull Requestを作成する
+### Pull Request作成
 
-コーディング担当はプルリクエストを作成する
+コーディング担当はプルリクエストを作成します。
 
-### Pull Requestをマージする
+### Pull Requestマージ
 
-レビュワーは内容を確認して、問題ない場合、mainにマージする。
+レビュワーは内容を確認して、指摘箇所がある場合、コメントをしてコーディング担当に修正をしていただきます。
+修正が無い場合やすべての取り込みが完了後、mainにマージします。
