@@ -1,4 +1,4 @@
-# 1. Trainsit Gateway構成要素
+# 1. Transit Gateway構成要素
 
 ### 公式ドキュメント
 
@@ -7,7 +7,7 @@
 ### VPCアタッチメント
 
 Transit Gateway では、VPC を接続するために「VPCアタッチメント」を作成し、Transit Gateway と VPC 内の特定サブネットを関連付ける必要があります。
-「VPCアタッチメント」 を作成する際、AWS では Transit Gateway 専用のサブネットを用意し、そのサブネットを Attachment に関連付けることを推奨しています。
+「VPCアタッチメント」 を作成する際、AWS では Transit Gateway 専用のサブネットを用意し、そのサブネットをVPCアタッチメントに関連付けることを推奨しています。
 [AWS Transit Gateway design best practices - Amazon VPC](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-best-design-practices.html)
 
 ![1763292485360](image/TransitGateway/アタッチメント.PNG)
@@ -35,3 +35,13 @@ EC2-AがEC2-Bに通信するときの経路を以下に示します。
 EC2-BがEC2-Aに通信するときの経路を以下に示します。
 
 ![1763292485360](image/TransitGateway/EC2-BtoEC2-A.PNG)
+
+### DirectConnect通信
+
+EC2-AがオンプレミスのServerと通信するときの経路を以下に示します。
+
+![1763292485360](image/TransitGateway/EC2-AtoOnpremisesServer.PNG)
+
+オンプレミスのServerがEC2-Aと通信するときの経路を以下に示します。
+
+![1763292485360](image/TransitGateway/OnpremisesServertoEC2-A.PNG)
