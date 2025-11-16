@@ -45,3 +45,13 @@ EC2-AがオンプレミスのServerと通信するときの経路を以下に示
 オンプレミスのServerがEC2-Aと通信するときの経路を以下に示します。
 
 ![1763292485360](image/TransitGateway/OnpremisesServertoEC2-A.PNG)
+
+### DirectConnectをSitetoSiteVPN(以下S2SVPN)で暗号化して通信
+
+EC2-AがオンプレミスのServerと通信するときの経路を以下に示します。
+
+![1763292485360](image/TransitGateway/EC2-AtoOnpremisesServer_S2SVPN.PNG)
+
+オンプレミスのServerがEC2-Aと通信するときの経路を以下に示します。
+
+![1763292485360](image/TransitGateway/OnpremisesServertoEC2-A_S2SVPN.PNG)
