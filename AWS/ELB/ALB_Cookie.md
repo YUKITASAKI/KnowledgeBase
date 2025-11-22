@@ -37,9 +37,9 @@ The load balancer also creates an AWSALBTGCORS cookie.
 
 # 2.ALBが発行するCookieの検証
 
-### 検証構成
+### ■検証構成
 
-##### ALB設定
+##### ○ALB設定
 
 ロードバランシングアルゴリズム：ラウンドロビン
 
@@ -47,17 +47,17 @@ The load balancer also creates an AWSALBTGCORS cookie.
 
 維持設定の期間：20秒
 
-##### 初回アクセス
+##### ○初回アクセス
 
 ![1763834658059](image/ALB_Cookie/ロードバランサーが生成したCookie_初回アクセス.PNG)
 
-##### アクセス2回目
+##### ○アクセス2回目
 
 ![1763834867561](image/ALB_Cookie/ロードバランサーが生成したCookie_アクセス2回目.PNG)
 
-### 初回アクセス
+### ■初回アクセス
 
-##### リクエストヘッダー
+##### ○リクエストヘッダー
 
 初回アクセスのため、set-cookieヘッダーが存在していない事を確認しました。
 
@@ -84,7 +84,7 @@ upgrade-insecure-requests　1
 user-agent　Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36
 ```
 
-##### レスポンスヘッダー
+##### ○レスポンスヘッダー
 
 アクセス先のサーバが分かるようにレスポンスヘッダーにx-backendとして、サーバ識別子を入れます。
 ALBからのレスポンスでset-cookieが存在している事を確認しました。
@@ -100,9 +100,7 @@ set-cookie　AWSALBCORS=VzFvgG+8fOUDCmPokhe1NVMd9qPNHCfMCIZ23ngxcecsEHl0iIfncknH
 x-backend　EC2-A
 ```
 
-### アクセス2回目
-
-##### リクエストヘッダー
+##### ○リクエストヘッダー
 
 初回アクセスのリクエストヘッダーで発行されたcookieがヘッダーに入っている事を確認しました。
 
@@ -131,7 +129,7 @@ upgrade-insecure-requests　1
 user-agent　Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36
 ```
 
-##### レスポンスヘッダー
+##### ○レスポンスヘッダー
 
 EC2-Aからレスポンスがあることを確認しました。
 また、レスポンス時に新しいCookieを発行している事を確認しました。
@@ -147,11 +145,11 @@ set-cookie　AWSALBCORS=XdU38hSjvME8Oljnai8Y4TEU6XKH+NdtGWAqI3pVyi96Awp/ow+IvXW1
 x-backend　EC2-A
 ```
 
-## アクセス2回目以降
+## ■アクセス2回目以降
 
 F5を連打して、HTTPリクエストを送り続ける限り、HTTPレスポンスで新しいCookieが発行されて、常にアクセス先がEC2-Aに固定されることを確認しました。
 
-##### リクエストヘッダー
+##### ○リクエストヘッダー
 
 ```
 :authority alb.hackandbuild.jp
@@ -181,7 +179,7 @@ upgrade-insecure-requests 1
 user-agent Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36
 ```
 
-##### レスポンスヘッダー
+##### ○レスポンスヘッダー
 
 ```
 accept-ranges bytes
@@ -194,11 +192,11 @@ set-cookie AWSALBCORS=tLVwU/I9CO6V8rI9hIsXUoHbrMUIM/p9+G46wPrgto/ofILzIA6FCaemY8
 x-backend EC2-A
 ```
 
-### Cookie有効期限後のアクセス
+### ■Cookie有効期限後のアクセス
 
 Cookieの有効期限まで何も操作しないで、アクセスした場合、セッション維持が解除されて、EC2-Bにアクセスされることを確認しました。
 
-##### リクエストヘッダー
+##### ○リクエストヘッダー
 
 ```
 :authority alb.hackandbuild.jp
@@ -225,7 +223,7 @@ upgrade-insecure-requests 1
 user-agent Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36
 ```
 
-##### レスポンスヘッダー
+##### ○レスポンスヘッダー
 
 ```
 accept-ranges bytes
@@ -242,9 +240,9 @@ x-backend EC2-B
 
 # 3.アプリケーションが発行するCookieの検証
 
-### 検証構成
+### ■検証構成
 
-##### ALB設定
+##### ○ALB設定
 
 ロードバランシングアルゴリズム：ラウンドロビン
 
@@ -254,7 +252,7 @@ x-backend EC2-B
 
 クロスゾーン負荷分散：ロードバランサー属性から設定を継承(デフォルトでオン)
 
-##### アプリケーション設定
+##### ○アプリケーション設定
 
 アプリケーションのCookie設定：20秒
 
@@ -266,17 +264,17 @@ x-backend EC2-B
 </IfModule>
 ```
 
-##### 初回アクセス
+##### ○初回アクセス
 
 ![1763834619332](image/ALB_Cookie/アプリケーションが発行するCookie_初回アクセス.PNG)
 
-##### アクセス2回目
+##### ○アクセス2回目
 
 ![1763834894283](image/ALB_Cookie/アプリケーションが発行するCookie_アクセス2回目.PNG)
 
 ### 初回アクセス
 
-##### リクエストヘッダー
+##### ○リクエストヘッダー
 
 初回アクセスのため、set-cookieヘッダーが存在していない事を確認しました。
 
@@ -303,7 +301,7 @@ upgrade-insecure-requests 1
 user-agent Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36
 ```
 
-##### レスポンスヘッダー
+##### ○レスポンスヘッダー
 
 アクセス先のサーバが分かるようにレスポンスヘッダーにx-backendとして、サーバ識別子を入れます。
 ALBからのレスポンスでset-cookieが存在している事を確認しました。
@@ -324,9 +322,9 @@ set-cookie AWSALBAPP-3=_remove_; Expires=Sat, 29 Nov 2025 17:32:15 GMT; Path=/; 
 x-backend EC2-A
 ```
 
-### アクセス2回目
+### ■アクセス2回目
 
-##### リクエストヘッダー
+##### ○リクエストヘッダー
 
 初回アクセスのリクエストヘッダーで発行されたcookieがヘッダーに入っている事を確認しました。
 
@@ -355,7 +353,7 @@ upgrade-insecure-requests 1
 user-agent Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)
 ```
 
-##### レスポンスヘッダー
+##### ○レスポンスヘッダー
 
 レスポンス時に新しいCookieを発行している事を確認しました。
 
@@ -373,11 +371,11 @@ set-cookie AWSALBAPP-3=_remove_; Expires=Sat, 29 Nov 2025 17:32:32 GMT; Path=/; 
 x-backend EC2-A
 ```
 
-## アクセス2回目以降
+### ■アクセス2回目以降
 
 F5を連打して、HTTPリクエストを送り続ける限り、HTTPレスポンスで新しいCookieが発行されて、常にアクセス先がEC2-Aに固定されることを確認しました。
 
-##### リクエストヘッダー
+##### ○リクエストヘッダー
 
 ```
 :authority alb.hackandbuild.jp
@@ -405,7 +403,7 @@ upgrade-insecure-requests 1
 user-agent Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36
 ```
 
-#### レスポンスヘッダー
+#### ○レスポンスヘッダー
 
 ```
 accept-ranges bytes
@@ -421,12 +419,12 @@ set-cookie AWSALBAPP-3=_remove_; Expires=Sat, 29 Nov 2025 17:51:31 GMT; Path=/; 
 x-backend EC2-A
 ```
 
-### Cookie有効期限後のアクセス
+### ■Cookie有効期限後のアクセス
 
 Cookieの有効期限まで何も操作しないで、アクセスした場合、セッション維持が解除されて、EC2-Bにアクセスされることを確認しました。
 セッション有効期限後のHTTPリクエストヘッダーではmy_sessionが存在していない事を確認しました。
 
-##### リクエストヘッダー
+##### ○リクエストヘッダー
 
 ```
 :authority alb.hackandbuild.jp
@@ -453,7 +451,7 @@ upgrade-insecure-requests 1
 user-agent Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)
 ```
 
-#### レスポンスヘッダー
+#### ○レスポンスヘッダー
 
 ```
 accept-ranges bytes
@@ -471,11 +469,11 @@ set-cookie AWSALBAPP-3=_remove_; Expires=Sat, 29 Nov 2025 17:54:00 GMT; Path=/; 
 x-backend EC2-B
 ```
 
-### 2つのCookieにおける有効期限の関係性について
+### ■2つのCookieにおける有効期限の関係性について
 
 ALBで設定したCookieの有効期限とアプリケーションで設定したCookieの有効期限について、ALBはHTTPリクエストから有効期限が短い方を参照してセッション維持を解除します。
 
-##### ■ALBにおけるCookieの有効期限が短い場合のパターン
+##### ○ALBにおけるCookieの有効期限が短い場合のパターン
 
 ALBのCookie有効期限：20秒
 
@@ -491,10 +489,10 @@ ALBのCookie有効期限：20秒
 </IfModule>
 ```
 
-20秒以内は操作しない場合でも、セッション維持される
-20秒以上操作しない場合、セッション維持が解除される
+* 20秒以内は操作しない場合でも、セッション維持される
+* 20秒以上操作しない場合、セッション維持が解除される
 
-##### ■アプリケーションにおけるCookieの有効期限が短い場合のパターン
+##### ○アプリケーションにおけるCookieの有効期限が短い場合のパターン
 
 ALBのCookie有効期限：1分
 
@@ -510,10 +508,10 @@ ALBのCookie有効期限：1分
 </IfModule>
 ```
 
-20秒以内は操作しない場合でも、セッション維持される
-20秒以上操作しない場合、セッション維持が解除される
+* 20秒以内は操作しない場合でも、セッション維持される
+* 20秒以上操作しない場合、セッション維持が解除される
 
-##### ■ALB設定とアプリケーションにおけるCookieの有効期限が同じパターン
+##### ○ALB設定とアプリケーションにおけるCookieの有効期限が同じパターン
 
 ALBのCookie有効期限：1分
 
@@ -529,10 +527,10 @@ ALBのCookie有効期限：1分
 </IfModule>
 ```
 
-60秒以内は操作しない場合でも、セッション維持される
-60秒以上操作しない場合、セッション維持が解除される
+* 60秒以内は操作しない場合でも、セッション維持される
+* 60秒以上操作しない場合、セッション維持が解除される
 
-##### ■アプリケーションでCookieの有効期限を設定しないパターン
+##### ○アプリケーションでCookieの有効期限を設定しないパターン
 
 ALBのCookie有効期限：1分
 
@@ -548,5 +546,5 @@ ALBのCookie有効期限：1分
 </IfModule>
 ```
 
-60秒以内は操作しない場合でも、セッション維持される
-60秒以上操作しない場合、セッション維持が解除される
+* 60秒以内は操作しない場合でも、セッション維持される
+* 60秒以上操作しない場合、セッション維持が解除される
