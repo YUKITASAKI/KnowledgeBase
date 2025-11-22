@@ -39,23 +39,25 @@ The load balancer also creates an AWSALBTGCORS cookie.
 
 ### 検証構成
 
-###### ALB設定
+##### ALB設定
 
 ロードバランシングアルゴリズム：ラウンドロビン
+
 維持設定のタイプ：ロードバランサーが Cookie を生成しました
+
 維持設定の期間：20秒
 
-###### 初回アクセス
+##### 初回アクセス
 
 ![1763834658059](image/ALB_Cookie/ロードバランサーが生成したCookie_初回アクセス.PNG)
 
-###### アクセス2回目
+##### アクセス2回目
 
 ![1763834867561](image/ALB_Cookie/ロードバランサーが生成したCookie_アクセス2回目.PNG)
 
 ### 初回アクセス
 
-###### リクエストヘッダー
+##### リクエストヘッダー
 
 初回アクセスのため、set-cookieヘッダーが存在していない事を確認しました。
 
@@ -82,7 +84,7 @@ upgrade-insecure-requests　1
 user-agent　Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36
 ```
 
-###### レスポンスヘッダー
+##### レスポンスヘッダー
 
 アクセス先のサーバが分かるようにレスポンスヘッダーにx-backendとして、サーバ識別子を入れます。
 ALBからのレスポンスでset-cookieが存在している事を確認しました。
@@ -100,7 +102,7 @@ x-backend　EC2-A
 
 ### アクセス2回目
 
-###### リクエストヘッダー
+##### リクエストヘッダー
 
 初回アクセスのリクエストヘッダーで発行されたcookieがヘッダーに入っている事を確認しました。
 
@@ -129,7 +131,7 @@ upgrade-insecure-requests　1
 user-agent　Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36
 ```
 
-###### レスポンスヘッダー
+##### レスポンスヘッダー
 
 EC2-Aからレスポンスがあることを確認しました。
 また、レスポンス時に新しいCookieを発行している事を確認しました。
@@ -149,7 +151,7 @@ x-backend　EC2-A
 
 F5を連打して、HTTPリクエストを送り続ける限り、HTTPレスポンスで新しいCookieが発行されて、常にアクセス先がEC2-Aに固定されることを確認しました。
 
-###### リクエストヘッダー
+##### リクエストヘッダー
 
 ```
 :authority alb.hackandbuild.jp
@@ -179,7 +181,7 @@ upgrade-insecure-requests 1
 user-agent Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36
 ```
 
-###### レスポンスヘッダー
+##### レスポンスヘッダー
 
 ```
 accept-ranges bytes
@@ -196,7 +198,7 @@ x-backend EC2-A
 
 Cookieの有効期限まで何も操作しないで、アクセスした場合、セッション維持が解除されて、EC2-Bにアクセスされることを確認しました。
 
-###### リクエストヘッダー
+##### リクエストヘッダー
 
 ```
 :authority alb.hackandbuild.jp
@@ -223,7 +225,7 @@ upgrade-insecure-requests 1
 user-agent Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36
 ```
 
-###### レスポンスヘッダー
+##### レスポンスヘッダー
 
 ```
 accept-ranges bytes
@@ -242,14 +244,17 @@ x-backend EC2-B
 
 ### 検証構成
 
-###### ALB設定
+##### ALB設定
 
 ロードバランシングアルゴリズム：ラウンドロビン
+
 維持設定のタイプ：アプリケーションベースのCookie
+
 維持設定の期間：60秒
+
 クロスゾーン負荷分散：ロードバランサー属性から設定を継承(デフォルトでオン)
 
-###### アプリケーション設定
+##### アプリケーション設定
 
 アプリケーションのCookie設定：20秒
 
@@ -261,17 +266,17 @@ x-backend EC2-B
 </IfModule>
 ```
 
-###### 初回アクセス
+##### 初回アクセス
 
 ![1763834619332](image/ALB_Cookie/アプリケーションが発行するCookie_初回アクセス.PNG)
 
-###### アクセス2回目
+##### アクセス2回目
 
 ![1763834894283](image/ALB_Cookie/アプリケーションが発行するCookie_アクセス2回目.PNG)
 
 ### 初回アクセス
 
-###### リクエストヘッダー
+##### リクエストヘッダー
 
 初回アクセスのため、set-cookieヘッダーが存在していない事を確認しました。
 
@@ -298,7 +303,7 @@ upgrade-insecure-requests 1
 user-agent Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36
 ```
 
-###### レスポンスヘッダー
+##### レスポンスヘッダー
 
 アクセス先のサーバが分かるようにレスポンスヘッダーにx-backendとして、サーバ識別子を入れます。
 ALBからのレスポンスでset-cookieが存在している事を確認しました。
@@ -321,7 +326,7 @@ x-backend EC2-A
 
 ### アクセス2回目
 
-###### リクエストヘッダー
+##### リクエストヘッダー
 
 初回アクセスのリクエストヘッダーで発行されたcookieがヘッダーに入っている事を確認しました。
 
@@ -350,7 +355,7 @@ upgrade-insecure-requests 1
 user-agent Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)
 ```
 
-###### レスポンスヘッダー
+##### レスポンスヘッダー
 
 レスポンス時に新しいCookieを発行している事を確認しました。
 
@@ -372,7 +377,7 @@ x-backend EC2-A
 
 F5を連打して、HTTPリクエストを送り続ける限り、HTTPレスポンスで新しいCookieが発行されて、常にアクセス先がEC2-Aに固定されることを確認しました。
 
-###### リクエストヘッダー
+##### リクエストヘッダー
 
 ```
 :authority alb.hackandbuild.jp
@@ -400,7 +405,7 @@ upgrade-insecure-requests 1
 user-agent Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36
 ```
 
-##### レスポンスヘッダー
+#### レスポンスヘッダー
 
 ```
 accept-ranges bytes
@@ -421,7 +426,7 @@ x-backend EC2-A
 Cookieの有効期限まで何も操作しないで、アクセスした場合、セッション維持が解除されて、EC2-Bにアクセスされることを確認しました。
 セッション有効期限後のHTTPリクエストヘッダーではmy_sessionが存在していない事を確認しました。
 
-###### リクエストヘッダー
+##### リクエストヘッダー
 
 ```
 :authority alb.hackandbuild.jp
@@ -448,7 +453,7 @@ upgrade-insecure-requests 1
 user-agent Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)
 ```
 
-##### レスポンスヘッダー
+#### レスポンスヘッダー
 
 ```
 accept-ranges bytes
@@ -470,7 +475,7 @@ x-backend EC2-B
 
 ALBで設定したCookieの有効期限とアプリケーションで設定したCookieの有効期限について、ALBはHTTPリクエストから有効期限が短い方を参照してセッション維持を解除します。
 
-###### ■ALBにおけるCookieの有効期限が短い場合のパターン
+##### ■ALBにおけるCookieの有効期限が短い場合のパターン
 
 ALBのCookie有効期限：20秒
 
@@ -489,7 +494,7 @@ ALBのCookie有効期限：20秒
 20秒以内は操作しない場合でも、セッション維持される
 20秒以上操作しない場合、セッション維持が解除される
 
-###### ■アプリケーションにおけるCookieの有効期限が短い場合のパターン
+##### ■アプリケーションにおけるCookieの有効期限が短い場合のパターン
 
 ALBのCookie有効期限：1分
 
@@ -508,7 +513,7 @@ ALBのCookie有効期限：1分
 20秒以内は操作しない場合でも、セッション維持される
 20秒以上操作しない場合、セッション維持が解除される
 
-###### ■ALB設定とアプリケーションにおけるCookieの有効期限が同じパターン
+##### ■ALB設定とアプリケーションにおけるCookieの有効期限が同じパターン
 
 ALBのCookie有効期限：1分
 
@@ -527,7 +532,7 @@ ALBのCookie有効期限：1分
 60秒以内は操作しない場合でも、セッション維持される
 60秒以上操作しない場合、セッション維持が解除される
 
-###### ■アプリケーションでCookieの有効期限を設定しないパターン
+##### ■アプリケーションでCookieの有効期限を設定しないパターン
 
 ALBのCookie有効期限：1分
 
