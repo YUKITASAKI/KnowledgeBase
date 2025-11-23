@@ -1,0 +1,89 @@
+body {
+    margin: 0; padding: 0; box-sizing: border-box;
+    display: flex; justify-content: center; align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #6e72fc, #ad1deb);
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+    position: relative;
+}
+
+#game {
+    text-align: center;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    position: relative;
+    z-index: 10;
+}
+
+#board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.cell {
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.cell:hover { background-color: #e0e0e0; }
+
+.winning {
+    animation: flash 0.5s infinite alternate;
+}
+
+@keyframes flash {
+    from { background-color: #ffdf00; }
+    to { background-color: #ff8800; }
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #4b4b4b;
+}
+
+#status {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+#restartButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    background-color: #6e72fc;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#restartButton:hover {
+    background-color: #5a60d3;
+}
+
+/* 花火エフェクト用Canvas */
+#fireworksCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 20;
+}

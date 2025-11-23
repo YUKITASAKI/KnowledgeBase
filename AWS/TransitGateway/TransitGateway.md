@@ -6,7 +6,7 @@
 
 ### VPCアタッチメント
 
-Transit Gateway では、VPC を接続するために「VPCアタッチメント」を作成し、Transit Gateway と VPC 内の特定サブネットを関連付ける必要があります。 
+Transit Gateway では、VPC を接続するために「VPCアタッチメント」を作成し、Transit Gateway と VPC 内の特定サブネットを関連付ける必要があります。
 「VPCアタッチメント」 を作成する際、AWS では Transit Gateway 専用のサブネットを用意し、そのサブネットをVPCアタッチメントに関連付けることを推奨しています。
 [AWS Transit Gateway design best practices - Amazon VPC](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-best-design-practices.html)
 

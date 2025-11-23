@@ -1,41 +1,52 @@
-# 1.ALBで利用可能なCookieの構成要素
+# 1.ALBで利用可能なセッション維持方式
 
-### AWSALB / AWSALBCORS＝旧方式（duration-based stickiness）
+### ■公式ドキュメント
 
-公式ドキュメント（Elastic Load Balancing → Application Load Balancer → Sticky sessions）
-https://docs.aws.amazon.com/elasticloadbalancing/latest/application/sticky-sessions.html
+[ロードバランサーの維持戦略の選択 - AWS 規範ガイダンス](https://docs.aws.amazon.com/ja_jp/prescriptive-guidance/latest/load-balancer-stickiness/welcome.html)
 
-🔍 公式説明（要点）
-「Duration-based stickiness」＝AWSALB cookie を使用
+### **■スティッキーセッション**
 
-AWS 公式より：
+複数のターゲットにトラフィックを分散させるのではなく、クライアントから単一のターゲットにトラフィックを繰り返しルーティングするロードバランサーの機能になります。
 
-When the load balancer generates a stickiness cookie,
-it uses the AWSALB cookie for duration-based stickiness.
+維持設定は加重ランダムルーティングアルゴリズムをサポートしておらず、クロスゾーン負荷分散を有効にする必要があり、維持設定は Cookie をサポートするクライアントにのみ利用できます。
 
-（＝ALB が自動生成する旧式のスティッキー方式）
+設定箇所：ターゲットグループ属性
 
-CORS 用には AWSALBCORS も生成
+利用されるリクエストヘッダー：AWSALB / AWSALBCORS
 
-For requests with the SameSite=None attribute,
-the load balancer sets an additional AWSALBCORS cookie.
+セッション維持設定のタイプとして、以下2つが選択可能になります。
 
-### AWSALBTG / AWSALBTGCORS＝新方式（target-group stickiness）
+##### ○期間ベースの維持設定
 
-同じ公式ページより：
+独自の維持設定期間を指定して、ロードバランサーがクライアントのリクエストを同じターゲットにルーティングする時間を管理できます。維持設定のタイプによって、クライアントセッションをターゲットにバインドして維持するために使用される Cookie が決まります。ロードバランサーが生成したCookie は、クライアントセッションをバインドし、ターゲットグループ内の同じターゲットにリクエストをルーティングします。
 
-「Application-based cookie stickiness」＝ターゲットグループ側
+維持設定の期間は、ロードバランサーによってクライアント接続がバインドされているターゲットとのセッションを維持できる最大時間です。維持設定の期間が経過すると、維持設定が解除され、ターゲットバインディングが変化する可能性があります。維持設定の期間は 1 秒から 7 日間で設定でき、デフォルトは 1 日になります。
 
-For application-based cookie stickiness,
-the load balancer uses the AWSALBTG cookie.
+![1763858351370](image/ALB_Cookie/期間ベースの維持設定.PNG)
 
-（＝ターゲットグループベースの新方式）
+##### ○アプリケーションベースの維持設定
 
-CORS 用には AWSALBTGCORS
+アプリケーションベースのCookie を使用してクライアントセッションをバインドし、リクエストをターゲットグループ内の同じターゲットにルーティングします。アプリケーションベースの維持設定では、ターゲットの維持設定にクライアントセッションの独自の基準を柔軟に設定できます。
 
-The load balancer also creates an AWSALBTGCORS cookie.
+維持設定の期間は、ロードバランサーによってクライアント接続がバインドされているターゲットとのセッションを維持できる最大時間です。維持設定の期間が経過すると、維持設定が解除され、ターゲットバインディングが変化する可能性があります。維持設定の期間は 1 秒から 7 日間で設定でき、デフォルトは 1 日になります。
 
-# 2.ALBが発行するCookieの検証
+![1763858411328](image/ALB_Cookie/アプリケーションベースの維持設定.PNG)
+
+### **■ターゲットグループの維持**
+
+主にブルー/グリーンデプロイで利用します。
+
+ブルー/グリーンデプロイとは、「ブルー(旧バージョン)重み：100」、「グリーン(新バージョン)重み：0」として設定を行い、切り替え時に「ブルー(旧バージョン)重み： 0」、「グリーン(新バージョン)重み：100」に重みを変更することでダウンタイムゼロで切り替えが出来る仕組みになります。
+
+利用されるリクエストヘッダー：AWSALBTG / AWSALBTGCORS
+
+設定箇所：リスナーアクション
+
+維持設定の期間は 1 秒から 7 日間で設定でき、デフォルトは 1時間になります。
+
+![1763858590719](image/ALB_Cookie/ターゲットグループの維持.PNG)
+
+# 2.スティッキーセッション(期間ベース)検証
 
 ### ■検証構成
 
@@ -238,7 +249,7 @@ set-cookie AWSALBCORS=DWqVdmLATu/50LhBL5H3ncx3sF3wsbqmJ94rRz3VvjqyxaPK+IdrxG6xC7
 x-backend EC2-B
 ```
 
-# 3.アプリケーションが発行するCookieの検証
+# 3.スティッキーセッション(アプリケーションベース)検証
 
 ### ■検証構成
 

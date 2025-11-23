@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tic-tac-toe-game
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tic-tac-toe-game
+  template:
+    metadata:
+      labels:
+        app: tic-tac-toe-game
+    spec:
+      containers:
+        - name: tic-tac-toe-container
+          image: <EcrImage>
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+      imagePullSecrets:
+        - name: ecr-secret  # ECR がプライベートリポジトリの場合に必要
