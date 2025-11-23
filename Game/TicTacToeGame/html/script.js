@@ -43,7 +43,7 @@ function handleCellClick(event) {
         gameActive = false;
     } else {
         currentPlayer = currentPlayer === '○' ? '×' : '○';
-        statusDisplay.textContent = `次のプレイヤー ${urrentPlayer}`;
+        statusDisplay.textContent = `次のプレイヤー ${currentPlayer}`;
     }
 }
 
